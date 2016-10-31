@@ -57,6 +57,15 @@ spec:
       containers:
         - name: cull-container
           image: allanlwu/jhub-cull
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - python
+            - /srv/cull/cull_idle_servers.py
+            - --timeout=3600
+            - --cull_every=600
+            - --url=http://${HUB_PROXY_SERVICE_HOST}:${HUB_PROXY_SERVICE_PORT}/hub
           env:
           - name: JPY_API_TOKEN
             valueFrom:
