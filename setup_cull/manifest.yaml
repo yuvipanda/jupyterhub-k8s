@@ -7,6 +7,16 @@ data:
   # Please generate a new one for your own deployment!
   auth.configproxy-token: 5166c5fe58744ffd9ab4ec3f37c2c7b5b05b3c14d7dd7da58ae406ab7e61d349
 ---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: cull-config
+data:
+  # Used to authenticate the culler to the hub. This string was generated with `pwgen 64`.
+  # Please generate a new one for your own deployment!
+  # Note: This is a jupyterhub token, totally different from proxy auth token!
+  auth.jhub-token.cull: aiph8Dei8LotheV2coh5Aifeagha7idaeh6oogoh3ooGabi2ahng1eejahnieKah
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -39,6 +49,12 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
+          - name: CULL_JHUB_TOKEN
+            valueFrom:
+              configMapKeyRef:
+                name: cull-config
+                value: auth.jhub-token.cull
+
           ports:
             - containerPort: 8000
               name: hub-proxy-port
@@ -70,5 +86,5 @@ spec:
           - name: JPY_API_TOKEN
             valueFrom:
               configMapKeyRef:
-                name: hub-config
-                key: auth.configproxy-token
+                name: cull-config
+                value: auth.jhub-token.cull
