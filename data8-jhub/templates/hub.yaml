@@ -28,7 +28,7 @@ spec:
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: hub-config
+  name: hub-config-{{ .Release.Revision }}
   namespace: {{ .Values.name }}
 data:
   token.proxy: {{ .Values.token.proxy | quote }}
@@ -83,45 +83,45 @@ spec:
         - name: SINGLEUSER_STORAGE_CLASS
           valueFrom:
             configMapKeyRef:
-              name: hub-config
+              name: hub-config-{{ Release.Revision }}
               key: singleuser.storage.class
         - name: SINGLEUSER_STORAGE_CAPACITY
           valueFrom:
             configMapKeyRef:
-              name: hub-config
+              name: hub-config-{{ Release.Revision }}
               key: singleuser.storage.capacity
         {{ if .Values.singleuser.memory.guarantee -}}
         - name: SINGLEUSER_MEM_GUARANTEE
           valueFrom:
             configMapKeyRef:
-              name: hub-config
+              name: hub-config-{{ Release.Revision }}
               key: singleuser.memory.limit
         {{- end }}
         {{ if .Values.singleuser.memory.limit -}}
         - name: SINGLEUSER_MEM_LIMIT
           valueFrom:
             configMapKeyRef:
-              name: hub-config
+              name: hub-config-{{ Release.Revision }}
               key: singleuser.memory.limit
         {{- end }}
         {{ if .Values.singleuser.cpu.guarantee -}}
         - name: SINGLEUSER_CPU_GUARANTEE
           valueFrom:
             configMapKeyRef:
-              name: hub-config
+              name: hub-config-{{ Release.Revision }}
               key: singleuser.cpu.guarantee
         {{- end }}
         {{ if .Values.singleuser.cpu.limit -}}
         - name: SINGLEUSER_CPU_LIMIT
           valueFrom:
             configMapKeyRef:
-              name: hub-config
+              name: hub-config-{{ Release.Revision }}
               key: singleuser.cpu.limit
         {{- end }}
         - name: SINGLEUSER_IMAGE
           valueFrom:
             configMapKeyRef:
-              name: hub-config
+              name: hub-config-{{ Release.Revision }}
               key: singleuser.image
         - name: POD_NAMESPACE
           valueFrom:
@@ -130,37 +130,37 @@ spec:
         - name: CULL_JHUB_TOKEN
           valueFrom:
             configMapKeyRef:
-              name: hub-config
+              name: hub-config-{{ Release.Revision }}
               key: token.culler
         - name: CONFIGPROXY_AUTH_TOKEN
           valueFrom:
             configMapKeyRef:
-              name: hub-config
+              name: hub-config-{{ Release.Revision }}
               key: token.proxy
         - name: GOOGLE_OAUTH_CLIENT_ID
           valueFrom:
             configMapKeyRef:
-              name: hub-config
+              name: hub-config-{{ Release.Revision }}
               key: oauth.google.client-id
         - name: GOOGLE_OAUTH_CLIENT_SECRET
           valueFrom:
             configMapKeyRef:
-              name: hub-config
+              name: hub-config-{{ Release.Revision }}
               key: oauth.google.client-secret
         - name: GOOGLE_OAUTH_CALLBACK_URL
           valueFrom:
             configMapKeyRef:
-              name: hub-config
+              name: hub-config-{{ Release.Revision }}
               key: oauth.google.callback-url
         - name: GOOGLE_OAUTH_HOSTED_DOMAIN
           valueFrom:
             configMapKeyRef:
-              name: hub-config
+              name: hub-config-{{ Release.Revision }}
               key: oauth.google.hosted-domain
         - name: GOOGLE_OAUTH_LOGIN_SERVICE
           valueFrom:
             configMapKeyRef:
-              name: hub-config
+              name: hub-config-{{ Release.Revision }}
               key: oauth.google.login-service
         ports:
           - containerPort: 8081
